@@ -25,6 +25,10 @@ RSpec.describe Account, :type => :model do
       Income.skip_callback(:create, :after, :notify_account)
     end
 
+    after do
+      Income.set_callback(:create, :after, :notify_account)
+    end
+
     it "updates account" do
       account.allocate(income)
       account.reload
@@ -74,17 +78,22 @@ RSpec.describe Account, :type => :model do
 
   describe "#subtract_expense" do
     let(:account) { FactoryGirl.create(:account, total: 500) }
-    let(:savings) { FactoryGirl.create(:bucket, account: account, amount: 250, priority: 1, name: "savings") }
-    let(:emergency) { FactoryGirl.create(:bucket, account: account, amount: 200, priority: 2, name: "emergency") }
-    let(:spending_cash) { FactoryGirl.create(:bucket, account: account, amount: 50, priority: 3, name: "spending_cash") }
+    let!(:savings) { FactoryGirl.create(:bucket, account: account, amount: 250, priority: 1, name: "savings") }
+    let!(:emergency) { FactoryGirl.create(:bucket, account: account, amount: 200, priority: 2, name: "emergency") }
+    let!(:spending_cash) { FactoryGirl.create(:bucket, account: account, amount: 50, priority: 3, name: "spending_cash") }
 
     before do
       Income.skip_callback(:create, :after, :notify_account)
       Expense.skip_callback(:create, :after, :notify_account)
     end
 
+    after do
+      Income.set_callback(:create, :after, :notify_account)
+      Expense.set_callback(:create, :after, :notify_account)
+    end
+
     context "there is no target bucket" do
-      let(:expense) { FactoryGirl.create(:expense, account: account, amount: 450) }
+      let(:expense) { FactoryGirl.create(:expense, account: account, amount: 450, bucket_id: nil) }
       it "removes funds from the lowest to highest priority bucket until the expense is paid" do
         account.subtract_expense(expense)
         savings.reload
@@ -92,7 +101,7 @@ RSpec.describe Account, :type => :model do
         spending_cash.reload
 
         expect(spending_cash.amount).to eq 0
-        expect(emergency.ammount).to eq 0
+        expect(emergency.amount).to eq 0
         expect(savings.amount).to eq 50
       end
 
