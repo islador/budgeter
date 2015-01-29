@@ -18,7 +18,7 @@ RSpec.describe Expense, :type => :model do
     let(:account) { FactoryGirl.create(:account) }
 
     it "sends itself to account" do
-      expect(account).to receive(:subtract_expense)
+      expect(account).to receive(:expense)
       account.expenses.create(name: "Test Expense", amount: 300.25)
     end
   end

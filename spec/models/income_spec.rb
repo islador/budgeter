@@ -19,7 +19,7 @@ RSpec.describe Income, :type => :model do
 
   describe "After creation" do
     it "sends itself to account" do
-      expect(account).to receive(:allocate)
+      expect(account).to receive(:income)
       account.incomes.create(name: "Paycheck", amount: 400.25, origin: "Work")
     end
   end

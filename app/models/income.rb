@@ -18,6 +18,6 @@ class Income < ActiveRecord::Base
 
   private
     def notify_account
-      self.account.allocate(self)
+      self.account.income(self)
     end
 end

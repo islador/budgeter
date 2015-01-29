@@ -18,6 +18,6 @@ class Expense < ActiveRecord::Base
 
   private
     def notify_account
-      self.account.subtract_expense(self)
+      self.account.expense(self)
     end
 end
