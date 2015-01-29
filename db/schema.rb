@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150129044811) do
+ActiveRecord::Schema.define(version: 20150129064435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20150129044811) do
     t.integer  "account_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "priority",   default: 0
   end
 
   create_table "buckets", force: :cascade do |t|
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20150129044811) do
     t.integer  "account_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "priority",   default: 0
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -45,6 +47,7 @@ ActiveRecord::Schema.define(version: 20150129044811) do
     t.integer  "account_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "bucket_id"
   end
 
   create_table "incomes", force: :cascade do |t|
@@ -54,6 +57,16 @@ ActiveRecord::Schema.define(version: 20150129044811) do
     t.integer  "account_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "recurring_expenses", force: :cascade do |t|
+    t.string   "name"
+    t.float    "amount"
+    t.integer  "priority"
+    t.integer  "bucket_id"
+    t.integer  "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
