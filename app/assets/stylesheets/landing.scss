@@ -1,0 +1,13 @@
+// Place all the styles related to the landing controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.landing_page__center-bar {
+  margin-right: auto;
+  margin-left: auto;
+  width: 250px;
+  .landing_page__center-bar-group {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}

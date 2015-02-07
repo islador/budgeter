@@ -15,6 +15,7 @@ class Account < ActiveRecord::Base
   has_many :buckets
   has_many :expenses
   has_many :incomes
+  has_many :recurring_expenses
 
   def expense(expense)
     subtract_expense(expense)
