@@ -4,10 +4,11 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string
-#  amount     :float
+#  amount     :integer          default("0")
 #  account_id :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  priority   :integer          default("0")
 #
 
 require 'rails_helper'
